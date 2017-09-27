@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TouchableHighlight, 
-  ScrollView, 
-  Modal,
-  TextInput
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableHighlight,
+    ScrollView,
+    Modal,
+    TextInput
 } from 'react-native';
 
 /*
@@ -19,99 +19,97 @@ import Card from './Card';
   Default set of cards
 */
 const DEFAULT_CARDS = [
-  {
-    term: "TERM",
-    definition: "Sample definition"
-  }
+    {
+        term: "Christopher Turner",
+        definition: "Done with Lesson 2!"
+    }
 ];
 
 class App extends Component {
-  // Fill this out
-  state = {
-    cards: DEFAULT_CARDS,
-      modalVisible: false
-  }
- 
-  /*
-    Toggles the new card modal
-  */
-  _toggleModal = () => {
-    // Fill this out
-    this.setState({
-        modalVisible: !this.state.modalVisible
-    });
-  }
-
-  /*
-    Passed to the new card modal.
-    Called when user decides to add new card.
-    Creates card object and adds it to our state
-  */
-  _addCard = (_term, _definition) => {
-    // Fill this out
-    const cards = this.state.cards;
-
-    cards.push({
-        term: _term,
-        definition: _definition
-    });
-
-    this.setState({
-        cards: cards
-    });
-
-    this.setState({
+    state = {
+        cards: DEFAULT_CARDS,
         modalVisible: false
-    });
-  }
+    }
 
-  render() {
-    // Loop through the cards array in state and create Card component for each card
-    const cards = this.state.cards.map((card, index) => {
-      // Fill this out
-      // Pass the appropriate data as a prop to the Card component
-      return (
-        <Card cardData={card} key={index} />
-      )
-    });
+    /*
+      Toggles the new card modal
+    */
+    _toggleModal = () => {
+        this.setState({
+            modalVisible: !this.state.modalVisible
+        });
+    }
 
-    return (
-      <View style={styles.container}>
-        <NewCardModal
-            modalVisible={this.state.modalVisible}
-            toggleModal={this._toggleModal}
-            addCard={this._addCard}
-        />
-        <ScrollView>
-            {cards}
-        </ScrollView>
-        <TouchableHighlight
-          style={styles.addButton}
-          onPress={this._toggleModal}
-          underlayColor='#128040'
-        >
-          <Text style={styles.addButtonText}>Add Card</Text>
-        </TouchableHighlight>
-      </View>
-    );
-  }
+    /*
+      Passed to the new card modal.
+      Called when user decides to add new card.
+      Creates card object and adds it to our state
+    */
+    _addCard = (_term, _definition) => {
+        const cards = this.state.cards;
+
+        cards.push({
+            term: _term,
+            definition: _definition
+        });
+
+        this.setState({
+            cards: cards
+        });
+
+        this.setState({
+            modalVisible: false
+        });
+    }
+
+    render() {
+        // Loop through the cards array in state and create Card component for each card
+        const cards = this.state.cards.map((card, index) => {
+            // Pass the appropriate data as a prop to the Card component
+            return (
+                <Card cardData={card} key={index} />
+            )
+        });
+
+        return (
+            <View style={styles.container}>
+              <NewCardModal
+                  modalVisible={this.state.modalVisible}
+                  toggleModal={this._toggleModal}
+                  addCard={this._addCard}
+              />
+
+              <ScrollView>
+                  {cards}
+              </ScrollView>
+
+              <TouchableHighlight
+                  style={styles.addButton}
+                  onPress={this._toggleModal}
+                  underlayColor='#128040'
+              >
+                <Text style={styles.addButtonText}>Add Card</Text>
+              </TouchableHighlight>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ecf0f1'
-  },
-  addButton: {
-    backgroundColor: '#2ecc71',
-    paddingTop: 20,
-    paddingBottom: 20
-  },
-  addButtonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontSize: 20
-  }
+    container: {
+        flex: 1,
+        backgroundColor: '#ecf0f1'
+    },
+    addButton: {
+        backgroundColor: '#2ecc71',
+        paddingTop: 20,
+        paddingBottom: 20
+    },
+    addButtonText: {
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontSize: 20
+    }
 });
 
 export default App;
