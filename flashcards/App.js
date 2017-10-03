@@ -22,6 +22,14 @@ const DEFAULT_CARDS = [
     {
         term: "Christopher Turner",
         definition: "Done with Lesson 2!"
+    },
+    {
+        term: "Hey Scopers!",
+        definition: "How do you like my flashcards?"
+    },
+    {
+        term: "Visit my website!",
+        definition: "christopherturner.io"
     }
 ];
 
@@ -86,7 +94,7 @@ class App extends Component {
               <TouchableHighlight
                   style={styles.addButton}
                   onPress={this._toggleModal}
-                  underlayColor='#128040'
+                  underlayColor='#401280'
               >
                 <Text style={styles.addButtonText}>Add Card</Text>
               </TouchableHighlight>
