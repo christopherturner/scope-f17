@@ -36,6 +36,8 @@ export default class SearchScreen extends Component {
     searchTerm - The title users are searching for
   */
   state = {
+      books: [],
+      searchTerm: ''
   }
 
   keyExtractor = (item, index) => item.id;
@@ -47,20 +49,52 @@ export default class SearchScreen extends Component {
     We get the response, convert it a JavaScript object
     Then get the 'items' array from the object and set it to our books state
   */
-  searchBooks = () => {
-  } 
+    searchBooks = () => {
+        fetch('https://www.googleapis.com/books/v1/volumes?q=' + this.state.searchTerm)
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({
+                    books: data.items
+                });
+            });
 
-  /*
-    For every item in our books array, we render a BookItem component
-    This is a custom component that displays the book title and description
-  */
-  renderBook = ({item}) => {
-  }
+        Keyboard.dismiss()
+    }
+
+
+    /*
+      For every item in our books array, we render a BookItem component
+      This is a custom component that displays the book title and description
+    */
+    renderBook = ({item}) => {
+        return <BookItem book={item.volumeInfo} navigation={this.props.navigation} />
+    }
 
   render() {
-    return (
-      <View>Fill me out</View>
-    );
+      return (
+          <View style={styles.container}>
+              <View style={styles.searchView}>
+                  <TextInput
+                      onChangeText={(text) => {
+                          this.setState({
+                              searchTerm: text
+                          });
+                      }}
+                      value={this.state.searchTerm}
+                      style={styles.searchTextInput}
+                  />
+
+                  <Button title="Search" onPress={this.searchBooks} color='#FFFFFF' style={styles.searchBtn} />
+              </View>
+
+              <FlatList
+                  data={this.state.books}
+                  keyExtractor={this.keyExtractor}
+                  renderItem={this.renderBook}
+                  style={styles.bookList}
+              />
+          </View>
+      );
   }
 }
 
@@ -87,13 +121,13 @@ const styles = StyleSheet.create({
     marginTop: (Platform.OS === 'ios') ? 20 : 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#e74c3c'
+    backgroundColor: '#F3BD42'
   },
   searchTextInput: {
     padding: 10,
     borderRadius: 2,
-    borderColor: '#FFFFFF',
-    backgroundColor: '#FFFFFF',
+    borderColor: '#F3BD42',
+    backgroundColor: '#9F0000',
     borderWidth: 1,
     flexBasis: '75%'
   },

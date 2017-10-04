@@ -15,11 +15,28 @@ export default class BookScreen extends Component {
     title: 'Book',
   };
 
-  render() {
-    return (
-      <View>Fill me out</View>
-    );
-  }
+    render() {
+        /*
+          Grab the data that may have been passed to this screen through the navigator
+        */
+        const { params } = this.props.navigation.state;
+
+        return (
+            <View style={styles.container}>
+              <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <Text style={styles.title}>{params.book.title}</Text>
+
+                <Image
+                    style={styles.thumbnail}
+                    resizeMode='contain'
+                    source={{uri: params.book.imageLinks.thumbnail}}
+                />
+
+                <Text style={styles.description}>{params.book.description}</Text>
+              </ScrollView>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
